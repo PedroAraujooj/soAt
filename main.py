@@ -51,7 +51,8 @@ async def player(name, cartela, fila):
     while True:
         num = await fila.get()
         print(f"{name} {num} {cartela} {len(marcados)}")
-        marcados.add(num)
+        if num in cartela:
+            marcados.add(num)
         if len(marcados) == len(cartela):
             return name, cartela, marcados
     return None, None, None
