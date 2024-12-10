@@ -28,9 +28,15 @@ def get_record_by_id(matricula):
 def get_all_records():
     future = concurrent.futures.Future()
     records = list(alunos.items())
-    timer = threading.Timer(30, lambda: future.set_result(records))
+
+    def set_resultado():
+        if not future.cancelled():
+            future.set_result(records)
+
+    timer = threading.Timer(30, set_resultado)
     timer.start()
     return future
+
 
 
 async def generator(limite):
